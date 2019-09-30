@@ -1,0 +1,100 @@
+body {
+  background-color:#fcdb00;
+  min-width: 1200px;
+  width: 100vw;
+  height: 100vh;
+  margin: 0;
+  padding: 0;
+}
+
+.content{
+  width: 1200px;
+  height: 100%;
+  margin: 0 auto;
+    
+}
+
+.head{
+  height: 15%;
+  display:flex;
+  /* height: 94.44px; */
+  justify-content: space-between;
+  align-items: center;
+}
+
+.menu {
+width: 118px;
+}
+
+.logo {
+  display:flex;
+  align-items: center;
+}
+
+.logotext {
+  font-size: 30px;
+  font-family: "SourceSansPro", sans-serif;
+  color: rgb(34, 34, 34);
+  font-weight: bold;
+  margin-left: 10px;
+  
+}
+
+.social_connect {
+  display: flex;
+  width: 118px; 
+  justify-content: space-between;
+}
+
+.center {
+  height: 75%;
+  width: 600px;
+  height: 80%;
+  /*height: calc(100vh - 94.44px);*/
+  margin-bottom: 54px;
+  display:flex;
+  flex-direction: column;
+  align-items: center; 
+  justify-content: center;
+  /* background-color: bisque; */
+  margin: 0 auto;
+}
+
+.header {
+font-size: 48px;
+font-family: "SourceSansPro", sans-serif;
+color: rgb(34, 34, 34);
+font-weight: bold;
+margin-bottom: 19px;
+}
+
+.sub_header {
+  width: 490px;
+  font-size: 20px;
+  font-weight: normal;
+  font-family: "SourceSansPro", sans-serif;
+  color: rgb(34, 34, 34);
+  text-align: center;
+  margin-top: 0;
+  margin-bottom: 41px;
+}
+
+button {
+  background-color: transparent;
+  border-style: solid;
+  border-width: 3px;
+  border-color: rgb(0, 0, 0);
+  width: 256px;
+  height: 56px;
+  font-size: 22px;
+  font-family: "SourceSansPro", sans-serif;
+  color: rgb(1, 1, 1);
+  font-weight: bold;
+}
+
+.arrow{
+  height: 10%;
+  /* background-color: blue; */
+  width: max-content;
+  margin: 0 auto;
+}
