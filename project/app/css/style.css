@@ -258,11 +258,14 @@ body, textarea {
       font-size: 15px;
       display: flex; }
 
+#content_quotes {
+  justify-content: center; }
+
 .quotes {
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-top: 40px; }
+  margin-bottom: 25px; }
   .quotes__del {
     align-self: flex-start;
     text-align: center;

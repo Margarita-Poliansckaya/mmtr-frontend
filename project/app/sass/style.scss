@@ -301,13 +301,16 @@ body, textarea{
   }
 }
 
+#content_quotes{
+  justify-content: center;
+}
 .quotes{
   display: flex;
   justify-content: center;
   align-items: center;
   // width: 650px;
   // margin-top:100px;
-  margin-top: 40px;
+  margin-bottom: 25px;
   &__del{
     align-self: flex-start;
     text-align: center;
