@@ -165,23 +165,28 @@
             </div>
             <div class="contact-form">
                 <input class="contact-form-input" type="text" placeholder="Email">
-                <input class="contact-form-input" type="text" placeholder="Full name">
+                <p id = 'error_1' class="contact-form__error"></p>
+                <input id = 'Full_name' class="contact-form-input" type="text" placeholder="Full name">
+                <p id = 'error_2' class="contact-form__error"></p>
                 <textarea   class="contact-form-input contact-form-input__message" type="text" placeholder="Message"></textarea>
+                <p id = 'error_3'class="contact-form__error"></p>
                 <button class="contact-form__btn">SEND MESSAGE</button>
             </div>
         </div>
     </div>
 </div>
-<div class="page">
-        <div class="content">
-            <div class="quotes">
+<div id = 'page-content_quotes' class="page">
+        <div id = 'content_quotes' class="content">
+            <!-- <div class="quotes">
                 <span class="mark font__subheader">Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
                                     Praesent vitae eros eget tellus tristique bibendum. 
                                     Donec rutrum sed sem quis venenatis.
                 </span>
-            </div>
+            </div> -->
         </div>
 </div>
-
+<script src="https://momentjs.com/downloads/moment-with-locales.js"></script>
+<script src="js\script.js" >
+</script>
 </body>
 </html>
