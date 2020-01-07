@@ -307,7 +307,7 @@ body, textarea {
 
 .window {
   position: fixed;
-  display: flex;
+  display: none;
   padding: 15px;
   color: #5c5c5c;
   font-size: 20px;
