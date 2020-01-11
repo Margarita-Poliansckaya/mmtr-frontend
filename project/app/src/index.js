@@ -1,3 +1,5 @@
+import Comment from './comment.js';
+
 document.addEventListener('DOMContentLoaded', function () {
 
     let elements = {
@@ -7,45 +9,13 @@ document.addEventListener('DOMContentLoaded', function () {
         windowOpen: document.querySelector('.window')
     }
 
-    function Comment(value, date) {
-        this.value = value,
-            this.date = date;
-    }
-
-    //Создание комментария
-    Comment.prototype.create = function (id) {
-        let
-            block = document.createElement('div'),
-            text = document.createElement('p'),
-            comment = document.createElement('span'),
-            del = document.createElement('button');
-        del.textContent = 'X';
-        del.className = 'quotes__del';
-        block.className = 'quotes';
-        elements.content.appendChild(block);
-        comment.className = "quotes-mark";
-        block.appendChild(comment);
-        block.appendChild(del);
-        text.className = 'quotes-mark__text font__subheader';
-        text.textContent = this.value;
-        text.id = id;
-        comment.appendChild(text);
-    }
-
-    Comment.prototype.setValue = function (newValue) {
-        let str = newValue.replace(/^\s+|\s+$/g, '')
-        if (str) {
-            this.value = newValue
-        }
-    }
-
-
     //При запуске страницы комментарии сохраняются из localStorage
     if (localStorage.length != 0) {
         for (let i = 0; i < localStorage.length; i++) {
-            let key = localStorage.key(i),
-                item = JSON.parse(localStorage.getItem(key));
-            let comment = new Comment(item.value, item.date);
+            let 
+                key = localStorage.key(i),
+                item = JSON.parse(localStorage.getItem(key)),
+                comment = new Comment(item.value, item.date);
             comment.create(key);
         }
     }
@@ -75,14 +45,13 @@ document.addEventListener('DOMContentLoaded', function () {
             let
                 dateOfCreat = new Date(),
                 val = document.getElementById("Full_name").value,
-                id = `f${(~~(Math.random() * 1e8)).toString(16)}`;
-            let comment = new Comment(val, dateOfCreat);
+                id = `f${(~~(Math.random() * 1e8)).toString(16)}`,
+                comment = new Comment(val, dateOfCreat);
             comment.create(id);
             localStorage.setItem(id, JSON.stringify(comment));
             elements.input.forEach(elem => elem.value = '');
         }
     })
-
 
     //Функция замены тегов (Вынесла, т.к. она мне понадобилась дважды)
     function tagReverse(elem, nameClass, tag) {
