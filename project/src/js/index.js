@@ -1,4 +1,5 @@
-import Comment from './comment.js';
+import Comment from './comment.js'
+import '../sass/style.scss'
 
 document.addEventListener('DOMContentLoaded', function () {
 
@@ -12,10 +13,9 @@ document.addEventListener('DOMContentLoaded', function () {
     //При запуске страницы комментарии сохраняются из localStorage
     if (localStorage.length != 0) {
         for (let i = 0; i < localStorage.length; i++) {
-            let 
-                key = localStorage.key(i),
-                item = JSON.parse(localStorage.getItem(key)),
-                comment = new Comment(item.value, item.date);
+            let key = localStorage.key(i);
+            let item = JSON.parse(localStorage.getItem(key));
+            let comment = new Comment(item.value, item.date);
             comment.create(key);
         }
     }
@@ -39,6 +39,7 @@ document.addEventListener('DOMContentLoaded', function () {
         error.forEach((e) => {
             e.textContent = '';
         })
+        
         let res = checkData();
 
         if (res) {

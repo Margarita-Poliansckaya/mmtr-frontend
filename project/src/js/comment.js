@@ -31,5 +31,3 @@ Comment.prototype.setValue = function (newValue) {
         this.value = newValue
     }
 }
-
-// export {Comment, create, setValue}
