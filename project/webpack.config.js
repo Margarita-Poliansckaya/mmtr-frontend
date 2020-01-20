@@ -1,17 +1,17 @@
 const path = require('path');
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
-const BrowserSyncPlugin = require('browser-sync-webpack-plugin');
+// const webpack = require('webpack');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const CopyWebpackPlugin = require('copy-webpack-plugin'); 
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 
-const PATHS =  {
+const PATHS = {
   src: path.join(__dirname, './src/'),
   dist: path.join(__dirname, './dist/')
 }
 
 module.exports = {
   entry: {
-    app: `${PATHS.src}js/index.js`
+    main: `${PATHS.src}js/index.js`
   },
   output: {
     filename: 'bundle.js',
@@ -20,11 +20,15 @@ module.exports = {
   module: {
     rules: [
       {
+        test: /\.js$/,
+        exclude: /node_modules/,
+        use: {
+          loader: "babel-loader"
+        }
+      },
+      {
         test: /\.scss$/,
-        use: ExtractTextPlugin.extract({
-          fallback: 'style-loader',
-          use: ['css-loader', 'sass-loader']
-        })
+          use: ['style-loader', MiniCssExtractPlugin.loader, 'css-loader', 'sass-loader']
       },
       {
         test: /\.img$/,
@@ -35,16 +39,22 @@ module.exports = {
       },
     ]
   },
+
+  devServer: {
+    contentBase: PATHS.src,
+    host: 'localhost',
+    port: 8080,
+    hot: true
+  },
+
   plugins: [
-    new ExtractTextPlugin('style.css'),
-    new BrowserSyncPlugin({
-      server: { 
-        baseDir: ['dist']
-     }
+    new MiniCssExtractPlugin({
+      filename: 'style.css'
     }),
     new CopyWebpackPlugin([
       { from: `${PATHS.src}img`, to: `img` },
     ]),
+    // new webpack.HotModuleReplacementPlugin(),
     new HtmlWebpackPlugin({
       inject: false,
       hash: true,

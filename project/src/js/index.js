@@ -2,7 +2,6 @@ import Comment from './comment.js'
 import '../sass/style.scss'
 
 document.addEventListener('DOMContentLoaded', function () {
-
     let elements = {
         addComment: document.querySelector('.contact-form__btn'),
         content: document.querySelector('#content_quotes'),
@@ -13,10 +12,16 @@ document.addEventListener('DOMContentLoaded', function () {
     //При запуске страницы комментарии сохраняются из localStorage
     if (localStorage.length != 0) {
         for (let i = 0; i < localStorage.length; i++) {
-            let key = localStorage.key(i);
-            let item = JSON.parse(localStorage.getItem(key));
-            let comment = new Comment(item.value, item.date);
-            comment.create(key);
+            // if (localStorage.key(i) != 'loglevel:webpack-dev-server'){
+                try{
+                    let key = localStorage.key(i);
+                    let item = JSON.parse(localStorage.getItem(key));
+                    let comment = new Comment(item.value, item.date);
+                    comment.create(key);
+                }
+                catch(e) {
+                    console.log(`Ошибка  ${e.name} : ${e.message} \n ${e.stack}`);
+                }
         }
     }
 
@@ -30,6 +35,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 document.getElementById(`error_${i + 1}`).textContent = '*Заполните поле!';
             }
         })
+        // console.log(result);
         return result
     }
 
