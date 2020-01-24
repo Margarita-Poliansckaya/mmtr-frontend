@@ -1,5 +1,5 @@
 import Comment from './comment.js'
-import '../sass/style.scss'
+import '../scss/style.scss'
 
 document.addEventListener('DOMContentLoaded', function () {
     let elements = {

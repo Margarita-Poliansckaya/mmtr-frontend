@@ -27,8 +27,8 @@ module.exports = {
         }
       },
       {
-        test: /\.scss$/,
-          use: ['style-loader', MiniCssExtractPlugin.loader, 'css-loader', 'sass-loader']
+        test:  /\.s?css$/,
+          use: ['style-loader', 'css-loader', 'sass-loader']
       },
       {
         test: /\.img$/,
@@ -40,21 +40,10 @@ module.exports = {
     ]
   },
 
-  devServer: {
-    contentBase: PATHS.src,
-    host: 'localhost',
-    port: 8080,
-    hot: true
-  },
-
   plugins: [
-    new MiniCssExtractPlugin({
-      filename: 'style.css'
-    }),
     new CopyWebpackPlugin([
       { from: `${PATHS.src}img`, to: `img` },
     ]),
-    // new webpack.HotModuleReplacementPlugin(),
     new HtmlWebpackPlugin({
       inject: false,
       hash: true,
