@@ -7,21 +7,18 @@ document.addEventListener('DOMContentLoaded', function () {
         content: document.querySelector('#content_quotes'),
         input: document.querySelectorAll('.contact-form-input'),
         windowOpen: document.querySelector('.window')
-    }
+    };
+
+    let listComments = [];
 
     //При запуске страницы комментарии сохраняются из localStorage
-    if (localStorage.length != 0) {
-        for (let i = 0; i < localStorage.length; i++) {
-            // if (localStorage.key(i) != 'loglevel:webpack-dev-server'){
-                try{
-                    let key = localStorage.key(i);
-                    let item = JSON.parse(localStorage.getItem(key));
-                    let comment = new Comment(item.value, item.date);
-                    comment.create(key);
-                }
-                catch(e) {
-                    console.log(`Ошибка  ${e.name} : ${e.message} \n ${e.stack}`);
-                }
+    if (localStorage.key('comments')) {
+        let items = JSON.parse(localStorage.getItem('comments'));
+        for (let i = 0; i < items.length; i++) {
+            let item = items[i];
+            let comment = new Comment(item.id, item.value, item.date);
+            comment.create();
+            listComments.push(comment);
         }
     }
 
@@ -35,7 +32,6 @@ document.addEventListener('DOMContentLoaded', function () {
                 document.getElementById(`error_${i + 1}`).textContent = '*Заполните поле!';
             }
         })
-        // console.log(result);
         return result
     }
 
@@ -45,17 +41,17 @@ document.addEventListener('DOMContentLoaded', function () {
         error.forEach((e) => {
             e.textContent = '';
         })
-        
+
         let res = checkData();
 
         if (res) {
             let
-                dateOfCreat = new Date(),
                 val = document.getElementById("Full_name").value,
                 id = `f${(~~(Math.random() * 1e8)).toString(16)}`,
-                comment = new Comment(val, dateOfCreat);
-            comment.create(id);
-            localStorage.setItem(id, JSON.stringify(comment));
+                comment = new Comment(id, val, new Date());
+            listComments.push(comment);
+            comment.create();
+            localStorage.setItem('comments', JSON.stringify(listComments));
             elements.input.forEach(elem => elem.value = '');
         }
     })
@@ -119,8 +115,9 @@ document.addEventListener('DOMContentLoaded', function () {
         let e = elem.target;
         if (e.className === 'quotes-mark__text font__subheader') {
             elements.windowOpen.style.display = 'flex';
-            //Парсим значения из JSON по ключу, который равен Id элемента
-            let item = JSON.parse(localStorage.getItem(e.id));
+            let obj = listComments.find(function(elem) {
+                return elem.id === e.id;
+            });
             moment.lang('ru');
             //Беру координаты элемента
             let coords = e.getBoundingClientRect();
@@ -128,7 +125,7 @@ document.addEventListener('DOMContentLoaded', function () {
             elements.windowOpen.style.left = coords.left + coords.width + 'px';
             elements.windowOpen.style.top = coords.top + coords.height + 'px';
             //В окно передаю контент, который отображает, сколько времени прошло с момента создания комментария
-            elements.windowOpen.textContent = moment(item.date).fromNow();
+            elements.windowOpen.textContent = moment(obj.getDate()).fromNow();
         }
     })
 
