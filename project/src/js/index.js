@@ -1,7 +1,7 @@
 import Comment from './comment.js'
 import '../scss/style.scss'
 
-document.addEventListener('DOMContentLoaded', function () {
+document.addEventListener('DOMContentLoaded', () => {
     let elements = {
         addComment: document.querySelector('.contact-form__btn'),
         content: document.querySelector('#content_quotes'),
@@ -11,8 +11,9 @@ document.addEventListener('DOMContentLoaded', function () {
 
     let listComments = [];
 
+    // localStorage.clear()
     //При запуске страницы комментарии сохраняются из localStorage
-    if (localStorage.key('comments')) {
+    if (localStorage.getItem('comments') !== null) {
         let items = JSON.parse(localStorage.getItem('comments'));
         for (let i = 0; i < items.length; i++) {
             let item = items[i];
@@ -22,17 +23,19 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
 
+    function voidCheck(element, index) {
+        let str = element.value.replace(/^\s+|\s+$/g, '')
+        if (!str) {
+            document.getElementById(`error_${index + 1}`).textContent = '*Заполните поле!';
+            return true
+        }
+    }
+
     //Проверка полей на заполненность
-    function checkData() {
-        let result = true;
-        elements.input.forEach(function (elem, i) {
-            let str = elem.value.replace(/^\s+|\s+$/g, '')
-            if (!str) {
-                result = false;
-                document.getElementById(`error_${i + 1}`).textContent = '*Заполните поле!';
-            }
-        })
-        return result
+    function checkInput() {
+        let fields = Array.from(elements.input);
+        let result = fields.filter((element, index) => voidCheck(element, index));
+        return result.length > 0 ? false : true
     }
 
     //Запись комментария по кнопке
@@ -42,9 +45,7 @@ document.addEventListener('DOMContentLoaded', function () {
             e.textContent = '';
         })
 
-        let res = checkData();
-
-        if (res) {
+        if (checkInput()) {
             let
                 val = document.getElementById("Full_name").value,
                 id = `f${(~~(Math.random() * 1e8)).toString(16)}`,
@@ -90,15 +91,19 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }, true)
 
-    // let comment = document.querySelectorAll('.quotes');
     elements.content.addEventListener('click', (elem) => {
         let e = elem.target;
         if (e.className === 'quotes__del') {
             //Узнаю общего родителя данных кнопки и комментария, для того чтобы определить Id комментария
             let comment = e.parentNode;
-            let delFromLocal = e.previousSibling.firstChild;
+            let delComment = e.previousSibling.firstChild;
             //Удаляю из localStorage комментарий по Id комментария
-            localStorage.removeItem(delFromLocal.id);
+            let obj = listComments.find((elem) => {
+                return elem.id === delComment.id;
+            });
+            let index = listComments.indexOf(obj);
+            listComments.splice(index, 1);
+            localStorage.setItem('comments', JSON.stringify(listComments));
             //Удаляю его со страницы
             comment.remove();
         }
@@ -115,7 +120,7 @@ document.addEventListener('DOMContentLoaded', function () {
         let e = elem.target;
         if (e.className === 'quotes-mark__text font__subheader') {
             elements.windowOpen.style.display = 'flex';
-            let obj = listComments.find(function(elem) {
+            let obj = listComments.find((elem) => {
                 return elem.id === e.id;
             });
             moment.lang('ru');
